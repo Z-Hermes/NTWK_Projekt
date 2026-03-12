@@ -21,3 +21,14 @@ export async function DELETE({params}) {
     }
     return Response.json({message: 'Bashki deleted'});
 }
+
+export async function PUT({request,params}) {
+    const id = params.id;
+    const {name, population, area, region, mayor, party, postal_code} = await request.json();
+    const [result] = await pool.query('UPDATE bashki SET name = ?, population = ?, area = ?, region = ?, mayor = ?, party = ?, postal_code = ? where id = ?', [name, population, area, region, mayor, party, postal_code, id]);
+
+    if (result.affectedRows === 0) {
+        return Response.json({ massage: 'Bashki not found'}, {status: 404})
+    }
+    return Response.json({message: 'Bashki updated'});
+}
