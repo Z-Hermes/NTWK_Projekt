@@ -11,3 +11,13 @@ export async function GET({params}) {
 
     return Response.json(rows[0]);
 }
+
+export async function DELETE({params}) {
+    const id = params.id;
+    const [result] = await pool.query('DELETE FROM bashki WHERE id=?', [id]);
+
+    if (result.affectedRows === 0) {
+        return Response.json({ message: 'Bashki not found'}, {status: 404})
+    }
+    return Response.json({message: 'Bashki deleted'});
+}
