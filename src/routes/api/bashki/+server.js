@@ -1,10 +1,12 @@
 import pool from '$lib/server/database.js';
 
+//Function to get all bashki
 export async function GET() {
     const [rows] = await pool.query('SELECT * from bashki');
     return Response.json(rows);
 }
 
+//Function to add a new bashki
 export async function POST({ request }) {
     if (!checkAuth(request)) {
         return Response.json({ error: 'Unauthorized' }, { status: 401 });
@@ -19,6 +21,7 @@ export async function POST({ request }) {
     return Response.json({ id: result.insertId, name, population, area, region, mayor, party, postal_code }, { status: 201 });
 }
 
+// get the username & password for the API
 import { API_USER, API_PASS } from '$env/static/private';
 
 function checkAuth(request) {

@@ -1,5 +1,6 @@
 import pool from '$lib/server/database.js';
 
+// Function to read only one bashki
 export async function GET({params}) {
 
     const id = params.id;
@@ -12,6 +13,7 @@ export async function GET({params}) {
     return Response.json(rows[0]);
 }
 
+// Function that makes it possible to delete a certain bashki of your choice
 export async function DELETE({params}) {
     const id = params.id;
     const [result] = await pool.query('DELETE FROM bashki WHERE id=?', [id]);
@@ -22,6 +24,7 @@ export async function DELETE({params}) {
     return Response.json({message: 'Bashki deleted'});
 }
 
+// Function to update a single bashki
 export async function PUT({request,params}) {
     const id = params.id;
     const {name, population, area, region, mayor, party, postal_code} = await request.json();
